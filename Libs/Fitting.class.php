@@ -36,7 +36,7 @@ class Fitting
 			-
 			Statistics::slots($b->item_->getAttribute("itt_slot"), $b->item_->getAttribute('itl_flagText'), $b->item_->getAttribute('itt_cat'));
 	}
-	
+
 	
 	public function sortItemsInSlotsByName($a, $b)
 	{
@@ -48,9 +48,10 @@ class Fitting
  * Takes the killmail fit, gets a list of typeID's, does 1 DB call to gather all the module stats then organises the killmail setup with slot positions and module data
  *
  * @param $_fit (Object)
+ * @param $pod (boolean)
  * @return (array)
  */
-	public function buildFit($_fit) {
+	public function buildFit($_fit, $pod) {
 		$arr = array();
 
 		if($_fit) {
@@ -62,6 +63,7 @@ class Fitting
 			}
 
 			$modData = array();
+			$impData = array();
 			$ammoData = array();
 
 			$qry = new DBQuery();
@@ -73,14 +75,16 @@ class Fitting
 				LEFT JOIN kb3_eveunits c
 					ON b.unitID = c.unitID
 				WHERE a.typeID = ".implode(" OR a.typeID = ", array_unique($typids))." ORDER BY b.attributeName ASC");
-
+			//print("SELECT a.typeID, a.value, b.attributeName, b.displayName, b.stackable, c.displayName as unit FROM kb3_dgmtypeattributes a INNER JOIN kb3_dgmattributetypes b ON a.attributeID = b.attributeID LEFT JOIN kb3_eveunits c ON b.unitID = c.unitID WHERE a.typeID = ".implode(" OR a.typeID = ", array_unique($typids))." ORDER BY b.attributeName ASC");
 			while($row = $qry->getRow()) {
 				$modData[$row["typeID"]][] = $row;
 			}
 
 			foreach($_fit as $k => $mods) {
 				$slot = Statistics::slots($mods->item_->getAttribute('itt_slot'), $mods->item_->getAttribute('itl_flagText'), $mods->item_->getAttribute('itt_cat'));
-
+				if($pod) {
+					$impData[0][$mods->item_->getAttribute("typeID")] = $mods;
+				}
 				if($slot != 100) {
 					switch($slot) {
 						//drones
@@ -107,6 +111,7 @@ class Fitting
 							if(self::advancedModuleSettings(strtolower($mods->item_->getAttribute("typeName"))) == "ab") {
 								self::$shipStats->setIsAB(true);
 							}
+
 							for($i = 0; $i < $mods->item_->getAttribute('itd_quantity'); $i++) {
 								self::$modSlots[$slot][self::$shipStats->moduleCount] = $this->moduleInformation($slot, $mods);
 								self::buildSettings($slot, $mods, $modData);
@@ -114,6 +119,23 @@ class Fitting
 						break;
 					};
 
+				}
+			}
+			if($impData[0]) {
+				foreach($impData[0] as $im => $imps) {
+					foreach($modData[$im] as $i) {
+						if($i[attributeName] == 'implantness') {
+							if($i[value] <= 5) {
+                                                		self::$modSlots[1][$im] = $this->moduleInformation(1, $imps);
+                                                		self::buildSettings(1, $imps, $modData);
+                                        		}
+                                        		else
+                                        		{
+                                                		self::$modSlots[2][$im] = $this->moduleInformation(2, $imps);
+                                                		self::buildSettings(2, $imps, $modData);
+                                        		}
+						}
+					}
 				}
 			}
 
@@ -135,6 +157,7 @@ class Fitting
 
 						foreach(self::$modSlots[1] as $m => $module) {
 							if($ammocharge == $module["groupID"] || ($module["groupID"] == 511 && $ammocharge == 509) || ($module["groupID"] == 1245 && $ammocharge == 510)) {// Assault Missile Lauchers uses same ammo as Standard Missile Lauchers
+								self::$modSlots[10][$m] = $this->moduleInformation(10, $ammo);
 								self::buildSettings(10, $ammo, $modData);
 							}
 						}
@@ -306,7 +329,7 @@ class Fitting
 			FROM kb3_invtraits a
 			LEFT JOIN kb3_eveunits b
 			ON b.unitID = a.unitID
-			WHERE a.typeID = ".$_typeID." AND a.skillID > 0"); // don't handle role bonuses at all
+			WHERE a.typeID = ".$_typeID);
 
 
 		while($row = $qry2->getRow()) {
@@ -489,9 +512,10 @@ class Fitting
  * Used to get the base stats for the ship by doing a db call on the ship name, stores it into the object variable
  *
  * @param $param_ship (string)
+ * @param $pod (boolean)
  * @return
  */
-	public function getShipStats($param_ship) {
+	public function getShipStats($param_ship, $pod) {
 		//global $shipStats;
 		$qry = new DBQuery();
 		$qry->execute("SELECT
@@ -504,14 +528,14 @@ class Fitting
 			RIGHT JOIN kb3_invtypes d
 				ON d.typeID = a.typeID
 			WHERE d.typeName = '".$qry->escape($param_ship)."'");
-
+			
 		while($row = $qry->getRow()) {
 			if(self::$shipStats->getShipIcon() == "") {
 				self::$shipStats->setShipIcon($row['typeID']);
 				self::$shipStats->setShipDesc($row['description']);
 				self::$shipStats->setMass(Calculations::calculateMass($row['mass']));
 			}
-
+			
 			switch(strtolower($row['attributeName'])) {
 				case "shieldcapacity":
 					self::$shipStats->setShieldAmount($row['value']);
@@ -659,6 +683,11 @@ class Fitting
 				break;
 			}
 		}
+                if($pod) {
+                        $arr['hislots'] = '5';
+                        $arr['medslots'] = '5';
+                        self::$shipStats->setShipSlots($arr);
+                }
 	}
 
 /**

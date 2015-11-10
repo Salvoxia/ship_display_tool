@@ -306,17 +306,16 @@ class FittingTools {
 
 
 		$fitter = new Fitting($kll_id);
-		$fitter->getShipStats($shipname);
-		// POS modules don't have any fitting
-		if($shipclass->getID() == 38) 
-		{
-			$fitter->buildFit(array());
+		if((config::get('ship_display_pods')) && ($ship->getExternalID() == '670' || $ship->getExternalID() == '33328')) {
+			$fitpod = true;
 		}
 		else
 		{
-			$fitter->buildFit(array_merge($km->getDestroyedItems(), $km->getDroppedItems()));
+			$fitpod = false;
 		}
-
+		$fitter->getShipStats($shipname, $fitpod);
+		$fitter->buildFit(array_merge($km->getDestroyedItems(), $km->getDroppedItems()), $fitpod);
+		
 		$victimShipClassName = $shipclass->getName();
 		$timeStamp = $km->getTimeStamp();
 		$victimShipID = edkURI::page('invtype', $ship->getExternalID(), 'id');
@@ -1250,10 +1249,10 @@ class FittingTools {
 			$arr[$i]['type'] = $value['type'];
 			$arr[$i]['duration'] = $value['duration'];
 			if($cap != 0 && $value['duration'] != 0) {
- 				$arr[$i]['use'] = $cap/$value['duration'];
+				$arr[$i]['use'] = $cap/$value['duration'];
 			} else {
- 				$arr[$i]['use'] = 0;
- 			}
+				$arr[$i]['use'] = 0;
+			}
 		}
 
 		return $arr;
@@ -1414,7 +1413,7 @@ class FittingTools {
 			if($dex != "M") {
 				$rof = self::setDamageModSkills("rof".$dex, $value['rof'.$dex], $value['techlevel']);
 				$dMod = self::setDamageModSkills("damage".$dex, $value['damage'.$dex], $value['techlevel']);
-				//echo $rof." - ".$dMod;
+				//echo $rof." - ".$dMod." - ".$value['damage'.$dex]."<br />";
 
 				$em = $value['emDamage'];
 				$ex = $value['exDamage'];
@@ -1432,7 +1431,6 @@ class FittingTools {
 				|| Fitting::$shipStats->getShipIcon() == 4308) {
 					Fitting::$shipStats->setRSize("Large");
 				}
-
 				if(self::isSmartBomb(strtolower($value['name']))) {
 					$rof = Calculations::statOntoShip($rof, 25,"-","%", 1);
 				}
@@ -1445,7 +1443,7 @@ class FittingTools {
 							|| $effect['effect'] == "rofL") {
 								if($dex == "P") {
 									if($effect['type'] == "=") {
-										 $rof = Calculations::statOntoShip($rof, $effect['bonus'],"-","%", 1);
+										$rof = Calculations::statOntoShip($rof, $effect['bonus'],"-","%", 1);
 									} else {
 										$rof = Calculations::statOntoShip($rof, (5*$effect['bonus']),"-","%", 1);
 									}
