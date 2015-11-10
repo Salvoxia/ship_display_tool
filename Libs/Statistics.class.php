@@ -98,7 +98,8 @@ class Statistics
  * @return (array)
  */
 	public static function modOrdering($_arr, &$_sensorbooster, $_scan, $_range) {
-		$_arr[$_sensorbooster[0]]['scan'] = ($_scan)?$_arr[$_sensorbooster[0]]['range']*2:0;
+
+		$_arr[$_sensorbooster[0]]['scan'] = ($_scan)?$_arr[$_sensorbooster[0]]['scan']*2:0;
 		$_arr[$_sensorbooster[0]]['range'] = ($_range)?$_arr[$_sensorbooster[0]]['range']*2:0;
 
 		unset($_sensorbooster[0]);
