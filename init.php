@@ -308,13 +308,13 @@ class FittingTools {
 		$fitter = new Fitting($kll_id);
 		$fitter->getShipStats($shipname);
 		// POS modules don't have any fitting
-		if($shipclass->getID() == 38)
+		if($shipclass->getID() == 38) 
 		{
-		   $fitter->buildFit(array());
+			$fitter->buildFit(array());
 		}
 		else
 		{
-		   $fitter->buildFit(array_merge($km->getDestroyedItems(), $km->getDroppedItems()));
+			$fitter->buildFit(array_merge($km->getDestroyedItems(), $km->getDroppedItems()));
 		}
 
 		$victimShipClassName = $shipclass->getName();
@@ -415,7 +415,7 @@ class FittingTools {
 			$type = "URL";
 			$source = substr($source, 3);
 		} else if (preg_match("/^ZKB:http/", $source)) {
-			$type = "CREST";
+			$type = "URL";
 			$source = substr($source, 4);
 		} else {
 			$type = "unknown";
@@ -1249,14 +1249,11 @@ class FittingTools {
 			$arr[$i]['capNeeded'] = $cap;
 			$arr[$i]['type'] = $value['type'];
 			$arr[$i]['duration'] = $value['duration'];
-
 			if($cap != 0 && $value['duration'] != 0) {
-				$arr[$i]['use'] = $cap/$value['duration'];
+ 				$arr[$i]['use'] = $cap/$value['duration'];
 			} else {
-				$arr[$i]['use'] = 0;
-			}
-
-
+ 				$arr[$i]['use'] = 0;
+ 			}
 		}
 
 		return $arr;
@@ -1385,7 +1382,6 @@ class FittingTools {
 				if($total != 0) {
 					$arr[$i]['dps'] = ($total/$averagedps);
 				}
-				//\Misc::pre($arr);
 				Fitting::$shipStats->setDamageGun($arr);
 			}
 		}
@@ -1418,7 +1414,7 @@ class FittingTools {
 			if($dex != "M") {
 				$rof = self::setDamageModSkills("rof".$dex, $value['rof'.$dex], $value['techlevel']);
 				$dMod = self::setDamageModSkills("damage".$dex, $value['damage'.$dex], $value['techlevel']);
-				//echo $rof." - ".$dMod." - ".$value['damage'.$dex]."<br />";
+				//echo $rof." - ".$dMod;
 
 				$em = $value['emDamage'];
 				$ex = $value['exDamage'];
@@ -1436,6 +1432,7 @@ class FittingTools {
 				|| Fitting::$shipStats->getShipIcon() == 4308) {
 					Fitting::$shipStats->setRSize("Large");
 				}
+
 				if(self::isSmartBomb(strtolower($value['name']))) {
 					$rof = Calculations::statOntoShip($rof, 25,"-","%", 1);
 				}
@@ -1448,7 +1445,7 @@ class FittingTools {
 							|| $effect['effect'] == "rofL") {
 								if($dex == "P") {
 									if($effect['type'] == "=") {
-										$rof = Calculations::statOntoShip($rof, $effect['bonus'],"-","%", 1);
+										 $rof = Calculations::statOntoShip($rof, $effect['bonus'],"-","%", 1);
 									} else {
 										$rof = Calculations::statOntoShip($rof, (5*$effect['bonus']),"-","%", 1);
 									}
