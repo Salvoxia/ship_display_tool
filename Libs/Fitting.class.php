@@ -29,6 +29,19 @@ class Fitting
 		self::$shipStats = new Shipstats();
 	}
 
+	public function sortSlots($a, $b)
+	{
+		return	
+			Statistics::slots($a->item_->getAttribute("itt_slot"), $a->item_->getAttribute('itl_flagText'), $a->item_->getAttribute('itt_cat'))
+			-
+			Statistics::slots($b->item_->getAttribute("itt_slot"), $b->item_->getAttribute('itl_flagText'), $b->item_->getAttribute('itt_cat'));
+	}
+	
+	
+	public function sortItemsInSlotsByName($a, $b)
+	{
+		return strcmp($a['name'], $b['name']);
+	}
 
 /**
  * buildFit method
@@ -41,12 +54,7 @@ class Fitting
 		$arr = array();
 
 		if($_fit) {
-			usort($_fit, function($a, $b) {
-				return
-					Statistics::slots($a->item_->getAttribute("itt_slot"), $a->item_->getAttribute('itl_flagText'), $a->item_->getAttribute('itt_cat'))
-					-
-					Statistics::slots($b->item_->getAttribute("itt_slot"), $b->item_->getAttribute('itl_flagText'), $b->item_->getAttribute('itt_cat'));
-			});
+			usort($_fit, array('Fitting', 'sortSlots'));
 
 			foreach($_fit as $head => $mods) {
 				if(in_array($mods->item_->getAttribute("typeID"), $this->ignoreMods)) continue;
@@ -99,7 +107,6 @@ class Fitting
 							if(self::advancedModuleSettings(strtolower($mods->item_->getAttribute("typeName"))) == "ab") {
 								self::$shipStats->setIsAB(true);
 							}
-
 							for($i = 0; $i < $mods->item_->getAttribute('itd_quantity'); $i++) {
 								self::$modSlots[$slot][self::$shipStats->moduleCount] = $this->moduleInformation($slot, $mods);
 								self::buildSettings($slot, $mods, $modData);
@@ -128,7 +135,6 @@ class Fitting
 
 						foreach(self::$modSlots[1] as $m => $module) {
 							if($ammocharge == $module["groupID"] || ($module["groupID"] == 511 && $ammocharge == 509) || ($module["groupID"] == 1245 && $ammocharge == 510)) {// Assault Missile Lauchers uses same ammo as Standard Missile Lauchers
-								self::$modSlots[10][$m] = $this->moduleInformation(10, $ammo);
 								self::buildSettings(10, $ammo, $modData);
 							}
 						}
@@ -166,24 +172,16 @@ class Fitting
 				}
 			}
 			if(Fitting::$modSlots[1]) {
-				usort(Fitting::$modSlots[1], function ($a, $b){
-					return strcmp($a['name'], $b['name']);
-				});
+				usort(Fitting::$modSlots[1], array('Fitting', 'sortItemsInSlotsByName'));
 			}
 			if(Fitting::$modSlots[2]) {
-				usort(Fitting::$modSlots[2], function ($a, $b){
-					return strcmp($a['name'], $b['name']);
-				});
+				usort(Fitting::$modSlots[2], array('Fitting', 'sortItemsInSlotsByName'));
 			}
 			if(Fitting::$modSlots[3]) {
-				usort(Fitting::$modSlots[3], function ($a, $b){
-					return strcmp($a['name'], $b['name']);
-				});
+				usort(Fitting::$modSlots[3], array('Fitting', 'sortItemsInSlotsByName'));
 			}
 			if(Fitting::$modSlots[5]) {
-				usort(Fitting::$modSlots[5], function ($a, $b){
-					return strcmp($a['name'], $b['name']);
-				});
+				usort(Fitting::$modSlots[5], array('Fitting', 'sortItemsInSlotsByName'));
 			}
 
 
@@ -308,7 +306,7 @@ class Fitting
 			FROM kb3_invtraits a
 			LEFT JOIN kb3_eveunits b
 			ON b.unitID = a.unitID
-			WHERE a.typeID = ".$_typeID);
+			WHERE a.typeID = ".$_typeID." AND a.skillID > 0"); // don't handle role bonuses at all
 
 
 		while($row = $qry2->getRow()) {
@@ -1642,7 +1640,8 @@ class Fitting
 			if($groupID == "774") {
 				self::$shipStats->shieldDur = Statistics::modShieldDur(self::$shipStats->shieldDur, self::$shipStats->moduleCount, $bonus, "-", self::$shipStats->shieldAmp, true);
 			} else {
-				self::$shipStats->armorDur = Statistics::modShieldDur(self::$shipStats->armorDur, self::$shipStats->moduleCount, $bonus, "-", $stack = 1);
+$one = 1;
+				self::$shipStats->armorDur = Statistics::modShieldDur(self::$shipStats->armorDur, self::$shipStats->moduleCount, $bonus, "-", $one);
 			}
 		} else if($effect == "drawback") {
 			if($groupID == "773") {
