@@ -1,4 +1,4 @@
-EvE Ship Display Tool (v3.5) developed by Spark's (Chris Sheppard)
+EvE Ship Display Tool (v3.6) developed by Spark's (Chris Sheppard)
 ===
 
 Special thanks to Hans Glockenspiel (In-Game name) for helping out. Salvoxia for being a long term supporter and everyone else who contributed.
@@ -11,8 +11,15 @@ Please provide as much information as you can regarding the error. A link to the
 
 Salvoxia has been awesome in adding tweaks to the codebase
 
+===
+This release is published by Salvoxia, continuing Chris' legacy.
+
+A big thanks goes to Snitch Ashor, who provided the code for the pod implant modification as well as the business logic for displaying the kill position!
+
 Change log:
 ===
+3.6: REQUIRES EDK 4.2.16.0+! Minor bug fixes, improved compatibility to older PHP versions, added the option to fit implants in pod's high/med slots (Code by Snitch Ashor), added displaying of the kill's position within the solar system (Code by Snitch Ashor)
+
 3.5: Major code improvements. Performance boost. Fix for the new version of the killboard. Assorted fixes scattered across all ships
 
 3.0: Asorted fixes across all ships. Complete overhaul of the stat system. Clean up of the code.
@@ -80,7 +87,7 @@ Change log:
 To install:
 ===
 1. Simply extract the contents to your desktop
-2. Upload the mods folder to your killboard directory
+2. Upload the folder to your killboard's mod directory and rename the folder to "ship_display_tool"
 3. Activate the module in your Admin section
 
 
