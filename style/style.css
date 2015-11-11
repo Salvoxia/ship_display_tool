@@ -330,7 +330,7 @@ li#d_miscount_8{
 }
 
 #victimBodycontainer li {
-	line-height:11px;
+	line-height:12px;
 }
 
 .portmini {
@@ -423,6 +423,14 @@ li#d_miscount_8{
 #infoBar #victimcol2 span.r_wid{
 	float:right;
 	width:144px;
+}
+#infoBar #victimcol1 span.position_line
+{
+    width: 344px;
+}
+#infoBar #victimcol1 li.position_line 
+{
+    width: 400px;
 }
 
 

@@ -281,6 +281,8 @@ class FittingTools {
 				$region = $km->getSystem()->getRegionName();
 				$systemURL = edkURI::page('system_detail', $km->getSystem()->getID(), 'sys_id');
 				$systemSecurity = $km->getSystem()->getSecurity(true);
+				$celestial = $km->getNearestCelestialName();
+				$celestialDistance = $km->getDistanceToNearestCelestialFormatted();
 			}
 			else
 			{
@@ -288,6 +290,8 @@ class FittingTools {
 				$region = $km->getSystem()->getRegionName();
 				$systemURL = "";
 				$systemSecurity = '0.0';
+				$celestial = "";
+				$celestialDistance = "";
 			}
 		}
 		else
@@ -296,6 +300,8 @@ class FittingTools {
 			$region = $km->getSystem()->getRegionName();
 			$systemURL = edkURI::page('system_detail', $km->getSystem()->getID(), 'sys_id');
 			$systemSecurity = $km->getSystem()->getSecurity(true);
+			$celestial = $km->getNearestCelestialName();
+			$celestialDistance = $km->getDistanceToNearestCelestialFormatted();
 		}
 
 		// Ship detail
@@ -331,6 +337,8 @@ class FittingTools {
 		Fitting::$shipStats->setPilotLoc($system);
 		Fitting::$shipStats->setPilotLocReg($region);
 		Fitting::$shipStats->setPilotLocSec($systemSecurity);
+                Fitting::$shipStats->setNearestCelestialName($celestial);
+                Fitting::$shipStats->setDistanceToNearestCelestialFormatted($celestialDistance);
 		Fitting::$shipStats->setPilotDate($timeStamp);
 		Fitting::$shipStats->setPilotDam($victimDamageTaken);
 		Fitting::$shipStats->setPilotCos($getISKLoss);
@@ -1248,11 +1256,14 @@ class FittingTools {
 			$arr[$i]['capNeeded'] = $cap;
 			$arr[$i]['type'] = $value['type'];
 			$arr[$i]['duration'] = $value['duration'];
+
 			if($cap != 0 && $value['duration'] != 0) {
 				$arr[$i]['use'] = $cap/$value['duration'];
 			} else {
 				$arr[$i]['use'] = 0;
 			}
+
+
 		}
 
 		return $arr;
@@ -1381,6 +1392,7 @@ class FittingTools {
 				if($total != 0) {
 					$arr[$i]['dps'] = ($total/$averagedps);
 				}
+				//\Misc::pre($arr);
 				Fitting::$shipStats->setDamageGun($arr);
 			}
 		}
@@ -2249,7 +2261,8 @@ class FittingTools {
 		$smarty->assign('getPilotLoc', Fitting::$shipStats->getPilotLoc());
 		$smarty->assign('getPilotLocReg', Fitting::$shipStats->getPilotLocReg());
 		$smarty->assign('getPilotLocSec', Misc::getSystemColour(Fitting::$shipStats->getPilotLocSec()));
-
+                $smarty->assign('nearestCelestialName', Fitting::$shipStats->getNearestCelestialName());
+                $smarty->assign('distanceToNearestCelestial', Fitting::$shipStats->getDistanceToNearestCelestialFormatted());
 		$smarty->assign('totcal', Fitting::$shipStats->getCalAmount());
 		$smarty->assign('usedcal', Fitting::$shipStats->getCalUsed());
 		if(Fitting::$shipStats->getCalAmount() == 0) {

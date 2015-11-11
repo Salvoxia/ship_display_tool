@@ -175,14 +175,20 @@
 								<li class="portmini"><a href='{$getPilotAllianceURL}'><img src='{$getAlliPort}' alt='{$getPilotAlliance}' title='{$getPilotAlliance}' /></a></li>
 							</ul>
 							<ul id="victimcol1">
-								<li>Name: <span class="r_wid"><a href='{$getPilotNameURL}'>{$getPilotName}</a></span></li>
-								<li>Corp: <span class="r_wid"><a href='{$getPilotCorpURL}'>{$getPilotCorp}</a></span></li>
-								<li>Alliance: <span class="r_wid"><a href='{$getPilotAllianceURL}'>{$getPilotAlliance}</a></span></li>
-								<li>Date: <span class="r_wid">{$getPilotDate}</span></li>
+								<li>Name: <span class="r_wid"><a href='{$getPilotNameURL}'>{$getPilotName|truncate:25:"..."}</a></span></li>
+								<li>Corp: <span class="r_wid"><a href='{$getPilotCorpURL}'>{$getPilotCorp|truncate:25:"..."}</a></span></li>
+								<li>Alliance: <span class="r_wid"><a href='{$getPilotAllianceURL}'>{$getPilotAlliance|truncate:25:"..."}</a></span></li>
+								{if isset($distanceToNearestCelestial) && $nearestCelestialName != ""}
+										<li class="position_line">Position: <span class="r_wid position_line" >{$nearestCelestialName} (Distance: {$distanceToNearestCelestial})</span></li>
+								{else if $nearestCelestialName != ""}
+										<li class="position_line">Nearest Celestial: <span class="r_wid position_line">{$nearestCelestialName}</span></li>
+								{/if}
+								
 							</ul>
 							<ul id="victimcol2">
-								<li>Ship: <span class="r_wid"><a href='{$getPilotShipURL}'>{$getPilotShip}</a><br />({$getPilotShipClass})</span></li>
-								<li>Location: <span class="r_wid"><a href='{$getPilotLocURL}'>{$getPilotLoc}</a><br /> {$getPilotLocReg} ({$getPilotLocSec})</span></li>
+                                                                <li>Date: <span class="r_wid">{$getPilotDate}</span></li>
+                                                                <li>Ship: <span class="r_wid"><a href='{$getPilotShipURL}'>{$getPilotShip|truncate:25:"..."}</a></span></li>
+								<li>System: <span class="r_wid"><a href='{$getPilotLocURL}'>{$getPilotLoc}</a> - {$getPilotLocReg} ({$getPilotLocSec})</span></li>
 							</ul>
 						</li>
 					</ul>

@@ -62,6 +62,8 @@ class Shipstats
 			$pilotLoc,
 			$pilotLocReg,
 			$pilotLocSec,
+                        $nearestCelestialName,
+                        $distanceToNearestCelestialFormatted,
 			$pilotDate,
 			$pilotDam,
 			$pilotCos,
@@ -720,6 +722,14 @@ class Shipstats
 		return $this->pilotLocReg;
 	}
 
+        public function getNearestCelestialName() {
+                return $this->nearestCelestialName;
+        }
+
+        public function getDistanceToNearestCelestialFormatted() {
+                return $this->distanceToNearestCelestialFormatted;
+        }
+
 	public function setPilotLoc($input) {
 		$this->pilotLoc = $input;
 	}
@@ -735,6 +745,14 @@ class Shipstats
 	public function setPilotLocSec($input) {
 		$this->pilotLocSec = $input;
 	}
+
+        public function setNearestCelestialName($input) {
+                $this->nearestCelestialName = $input;
+        }
+
+        public function setDistanceToNearestCelestialFormatted($input) {
+                $this->distanceToNearestCelestialFormatted = $input;
+        }
 
 	public function getPilotDate() {
 		return $this->pilotDate;
