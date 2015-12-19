@@ -333,8 +333,16 @@ class Fitting
 
 
 		while($row = $qry2->getRow()) {
+                    
+                        // dirty hack: Role Boni aren't recognized and multiplied with Level 5 Skill
+                        // to prevent that, divide the any role bonus by 5 
+                        $bonus = $row['bonus'];
+                        if($row['skillID'] == -1)
+                        {
+                            $bonus = $bonus / 5;
+                        }
 			$bonus_text = strtolower(strip_tags($row["bonusText"]));
-			$effect = ShipEffect::findEffectName($bonus_text, $row["bonus"]);
+			$effect = ShipEffect::findEffectName($bonus_text, $bonus);
 
 			if($effect == null) {
 				continue;
