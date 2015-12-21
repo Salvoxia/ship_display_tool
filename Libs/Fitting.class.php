@@ -1474,11 +1474,13 @@ class Fitting
 				self::$shipStats->scan++;
 			}
 		} else if($effect == "maxtargetrangebonusbonus") {
-			if($groupID == "910") {
+			// check for scan resolution script and presence of local sensor boosters (don't apply for remote sensor booster)
+			if($groupID == "910" && count(self::$shipStats->getSensorBooster())>0) {
 				Statistics::modOrdering(self::$shipStats->getSensorBooster(), self::$shipStats->sensorbooster, false, true);
 			}
 		} else if($effect == "scanresolutionbonusbonus") {
-			if($groupID == "910") {
+			// check for scan resolution script and presence of local sensor boosters (don't apply for remote sensor booster)
+			if($groupID == "910" && count(self::$shipStats->getSensorBooster())>0) {
 				Statistics::modOrdering(self::$shipStats->getSensorBooster(), self::$shipStats->sensorbooster, true, false);
 			}
 		} else if($effect == "maxlockedtargetsbonus") {
