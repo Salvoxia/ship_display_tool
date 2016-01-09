@@ -54,7 +54,7 @@ class FittingTools {
  * @param $home (Object)
  * @return
  */
-	public function addFitting($home) {
+	public static function addFitting($home) {
 		$home->delete("fitting");
 		$home->delete("victim");
 		$home->delete("victimShip");
@@ -70,7 +70,7 @@ class FittingTools {
  * @param $home (Object)
  * @return
  */
-	public function RemoveContextFinalBlowTopDamage($home) {
+	public static function RemoveContextFinalBlowTopDamage($home) {
 		$home->delete("damageBox");
 	}
 
@@ -84,7 +84,7 @@ class FittingTools {
  * @param $home (Object)
  * @return (string) the html output
  */
-	public function displayFitting($home) {
+	public static function displayFitting($home) {
 		global $smarty;
 		$kll_id = $home->kll_id;
 
@@ -381,7 +381,7 @@ class FittingTools {
  * @param $p_ex_id (int)
  * @return
  */
-	public function source($kill, $kill_id) {
+	public static function source($kill, $kill_id) {
 		global $smarty;
 
 		$verification = false;
@@ -443,7 +443,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getCPUandPowerValues() {
+	private static function getCPUandPowerValues() {
 		$stack = 1;
 
 		foreach(Fitting::$shipStats->loadPowerAdd as $value) {
@@ -555,7 +555,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function setlevel5Skills() {
+	private static function setlevel5Skills() {
 		//shield amount
 		Fitting::$shipStats->setShieldAmount(Calculations::statOntoShip(Fitting::$shipStats->getShieldAmount(), 25, "+", "%", 1));
 
@@ -594,7 +594,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getExtraStats() {
+	private static function getExtraStats() {
 		//sort resists
 		self::setAndOrderShipResists();
 
@@ -718,7 +718,7 @@ class FittingTools {
  * @param $shipname (string)
  * @return
  */
-	private function getShipDrone($shipname) {
+	private static function getShipDrone($shipname) {
 
 		if(strstr($shipname, "nyx")
 		|| strstr($shipname, "aeon")
@@ -747,7 +747,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function setAndOrderShipResists() {
+	private static function setAndOrderShipResists() {
 
 		$orderSystem = array(
 			4 => "subsystem",
@@ -874,7 +874,7 @@ class FittingTools {
  * @param $tankType (string)
  * @return
  */
-	private function returnTankResults($tankType) {
+	private static function returnTankResults($tankType) {
 		/*echo "<pre>";
 		print_r(Fitting::$shipStats->getTankBoost());
 		echo "</pre>";*/
@@ -911,7 +911,7 @@ class FittingTools {
  * @param $type (string)
  * @return
  */
-	private function boostDuration($type) {
+	private static function boostDuration($type) {
 		$j = 0;
 		if(Fitting::$shipStats->getTankBoost()) {
 			foreach(Fitting::$shipStats->getTankBoost() as $i => $value) {
@@ -954,7 +954,7 @@ class FittingTools {
  * @param $type (string)
  * @return
  */
-	private function ampDur($dur, $type) {
+	private static function ampDur($dur, $type) {
 		$total = $dur;
 		if($type == "armor") {
 			if(Fitting::$shipStats->armorDur) {
@@ -982,7 +982,7 @@ class FittingTools {
  * @param $type (string)
  * @return
  */
-	private function ampBooster($boostAmount, $icon, $type) {
+	private static function ampBooster($boostAmount, $icon, $type) {
 		$total = $boostAmount;
 
 		if($type == "shield") {
@@ -1030,7 +1030,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function setSigBoostforWarpDis() {
+	private static function setSigBoostforWarpDis() {
 		if(Fitting::$shipStats->getSigRadiusBoost()) {
 			foreach(Fitting::$shipStats->getSigRadiusBoost() as $i => $value) {
 				if($value != 0) {
@@ -1048,7 +1048,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function sensorBoosterAdd() {
+	private static function sensorBoosterAdd() {
 		Fitting::$shipStats->scan = 0;
 		Fitting::$shipStats->range = 0;
 		$arrRange = array();
@@ -1162,7 +1162,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getDroneSkillDamage() {
+	private static function getDroneSkillDamage() {
 		$k = 0;
 		if(Fitting::$shipStats->getDroneDamage()) {
 			foreach(Fitting::$shipStats->getDroneDamage() as $i => $value) {
@@ -1230,7 +1230,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function remoteRepStats() {
+	private static function remoteRepStats() {
 
 		foreach(Fitting::$shipStats->getTransCap() as $i => $value) {
 			$cap = $value['capNeeded'];
@@ -1277,7 +1277,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getDPS() {
+	private static function getDPS() {
 		$total = 0;
 
 		if(Fitting::$shipStats->getDamageGun()) {
@@ -1319,7 +1319,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getVolley() {
+	private static function getVolley() {
 		$total = 0;
 		if(Fitting::$shipStats->getDamageGun()) {
 			foreach(Fitting::$shipStats->getDamageGun() as $i => $value) {
@@ -1337,7 +1337,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function getDPSAndVolley() {
+	private static function getDPSAndVolley() {
 		$avDPS;
 		$condition = "";
 		$i = 0;
@@ -1406,7 +1406,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function turretMods() {
+	private static function turretMods() {
 
 		foreach(Fitting::$shipStats->getDamageGun() as $i => $value) {
 
@@ -1642,7 +1642,7 @@ class FittingTools {
  * @param $param_techModLevel (int)
  * @return
  */
-	private function setDamageModSkills($param_type, $param_input, $param_techModLevel) {
+	private static function setDamageModSkills($param_type, $param_input, $param_techModLevel) {
 		if($param_type == "rofP" || $param_type == "rofL" || $param_type == "rofH") $param_type = "rofT";
 		if($param_type == "damageP" || $param_type == "damageL" || $param_type == "damageH") $param_type = "damageT";
 
@@ -1713,7 +1713,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function totalCapUse() {
+	private static function totalCapUse() {
 		$total = 0;
 		if(Fitting::$shipStats->getCapGJ()) {
 			foreach(Fitting::$shipStats->getCapGJ() as $i => $value) {
@@ -1742,7 +1742,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function totalCapInjected() {
+	private static function totalCapInjected() {
 		$total = 0;
 		if(Fitting::$shipStats->getCapInj()) {
 			foreach(Fitting::$shipStats->getCapInj() as $i => $value) {
@@ -1768,7 +1768,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function capacitorInjector() {
+	private static function capacitorInjector() {
 
 		foreach(Fitting::$shipStats->getCapInj() as $i => $value) {
 			$arr[$i]['duration'] = $value['duration'];
@@ -1799,7 +1799,7 @@ class FittingTools {
  * @param
  * @return
  */
-	private function capacitorUsage() {
+	private static function capacitorUsage() {
 		$arr = array();
 
 		if(Fitting::$shipStats->getCapGJ()) {
@@ -1855,7 +1855,7 @@ class FittingTools {
  * @param $param_value (int)
  * @return
  */
-	private function getSkillset($param_module, $param_type, $param_value) {
+	private static function getSkillset($param_module, $param_type, $param_value) {
 
 		if(Fitting::advancedModuleSettings($param_module) == "mwd") {
 			if($param_type == "duration") {
@@ -2056,7 +2056,7 @@ class FittingTools {
  * @param $modCap (int)
  * @return
  */
-	private function capInjEmpty($modCap) {
+	private static function capInjEmpty($modCap) {
 
 		switch($modCap) {
 			case "160":
@@ -2088,7 +2088,7 @@ class FittingTools {
  * @param $param_module (string)
  * @return
  */
-	private function isSmartBomb($param_module) {
+	private static function isSmartBomb($param_module) {
 
 		if(strstr($param_module, "smartbomb")
 		|| strstr($param_module, "notos")
@@ -2111,7 +2111,7 @@ class FittingTools {
  * @param $name (string)
  * @return (string)
  */
-	private function getTechLevel($tech, $meta, $name) {
+	private static function getTechLevel($tech, $meta, $name) {
 
 		switch($tech) {
 			case "1":
@@ -2172,7 +2172,7 @@ class FittingTools {
  * @param $param_shipimgy (string)
  * @return (string)
  */
-	private function displayShipStats($param_ship, $param_shipimgx, $param_shipimgy) {
+	private static function displayShipStats($param_ship, $param_shipimgx, $param_shipimgy) {
 		//global $shipStats;
 		global $smarty;
 

@@ -29,7 +29,7 @@ class Fitting
 		self::$shipStats = new Shipstats();
 	}
 
-	public function sortSlots($a, $b)
+	public static function sortSlots($a, $b)
 	{
 		return	
 			Statistics::slots($a->item_->getAttribute("itt_slot"), $a->item_->getAttribute('itl_flagText'), $a->item_->getAttribute('itt_cat'))
@@ -38,7 +38,7 @@ class Fitting
 	}
 
 	
-	public function sortItemsInSlotsByName($a, $b)
+	public static function sortItemsInSlotsByName($a, $b)
 	{
 		return strcmp($a['name'], $b['name']);
 	}
@@ -362,7 +362,7 @@ class Fitting
  * @param $_value (int)
  * @return
  */
-	public function getttShipstatsfrommods($_attributeName, $_value) {
+	public static function getttShipstatsfrommods($_attributeName, $_value) {
 
 		switch($_attributeName) {
 			case "shieldcapacity":
@@ -705,7 +705,7 @@ class Fitting
  * @param $sensor_param (string)
  * @return (string)
  */
-	private function getSensorTypeImg($sensor_param) {
+	private static function getSensorTypeImg($sensor_param) {
 
 		switch($sensor_param) {
 			case "radar":
@@ -733,7 +733,7 @@ class Fitting
  * @param $input (int)
  * @return
  */
-	private function returnShipSize($input) {
+	private static function returnShipSize($input) {
 		switch($input) {
 			case "1":
 				return "Small";
@@ -758,7 +758,7 @@ class Fitting
  * @param $param_unit (string)
  * @return
  */
-	private function negRules($param_input, $param_unit) {
+	private static function negRules($param_input, $param_unit) {
 
 		switch($param_input) {
 			case 'true':
@@ -778,7 +778,7 @@ class Fitting
  * @param $param_input (string)
  * @return
  */
-	private function negConditions($param_input) {
+	private static function negConditions($param_input) {
 		switch(strtolower($param_input)) {
 			case "hp":
 				return 0;
@@ -796,7 +796,7 @@ class Fitting
  * @param $module_param (string)
  * @return
  */
-	private function setTank($module_param) {
+	private static function setTank($module_param) {
 		if(strstr($module_param, "shield booster")
 		|| strstr($module_param, "shield overload")
 		|| strstr($module_param, "clarity ward")
@@ -827,7 +827,7 @@ class Fitting
  * @param $modName (string)
  * @return (bool)
  */
-	private function isReactor($modName) {
+	private static function isReactor($modName) {
 		if(strstr($modName,"reactor control")
 		|| strstr($modName,"reaction control")) {
 			return true;
@@ -843,7 +843,7 @@ class Fitting
  * @param
  * @return
  */
-	public function shipEffects() {
+	public static function shipEffects() {
 		if(self::$shipStats->getShipEffects()) {
 			foreach(self::$shipStats->getShipEffects() as $i => $value) {
 				self::applyShipSkills($value['bonus'], $value['type'], "%", strtolower($value['effect']), true, 5, 1, "", 0, "", 0, 0, 0);
@@ -857,7 +857,7 @@ class Fitting
  * @param $param_input (string)
  * @return
  */
-	public function advancedModuleSettings($param_input) {
+	public static function advancedModuleSettings($param_input) {
 		if(strstr($param_input, "microwarpdrive")
 		|| strstr($param_input, "digital booster")
 		|| strstr($param_input, "y-t8 ")
@@ -895,7 +895,7 @@ class Fitting
  * @param $mass (string)
  * @return
  */
-	private function applyShipSkills($bonus, $type, $mode, $effect, $shipEff, $skillBonus, $negEffect, $groupID, $capacity, $modName, $techLevel, $moduleLevel, $mass) {
+	private static function applyShipSkills($bonus, $type, $mode, $effect, $shipEff, $skillBonus, $negEffect, $groupID, $capacity, $modName, $techLevel, $moduleLevel, $mass) {
 		self::setTank($modName);
 
 		//echo $modName." | ".$bonus." | ".$effect." | ".$groupID."<br />";
@@ -2067,7 +2067,7 @@ $one = 1;
  * @param $techLevel (int)
  * @return
  */
-	private function applyDroneSkills($_bonus, $_effect, $_modName, $_techLevel, $_count) {
+	private static function applyDroneSkills($_bonus, $_effect, $_modName, $_techLevel, $_count) {
 		//echo $_bonus." | ".$_effect." | ".$_modName." | ".$_techLevel."<br />";
 
 		switch($_effect) {
@@ -2115,7 +2115,7 @@ $one = 1;
  * @param $modname_param (string)
  * @return (string)
  */
-	private function subsystemaddon($modname_param) {
+	private static function subsystemaddon($modname_param) {
 
 		switch($modname_param) {
 			case "Legion Defensive - Adaptive Augmenter":
