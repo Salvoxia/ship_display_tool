@@ -1,4 +1,4 @@
-EvE Ship Display Tool (v3.6) developed by Spark's (Chris Sheppard)
+EvE Ship Display Tool (v3.7) developed by Spark's (Chris Sheppard)
 ===
 
 Special thanks to Hans Glockenspiel (In-Game name) for helping out. Salvoxia for being a long term supporter and everyone else who contributed.
@@ -18,6 +18,8 @@ A big thanks goes to Snitch Ashor, who provided the code for the pod implant mod
 
 Change log:
 ===
+3.7: Fixed bugs with ship role bonuses, sometimes causing "division by zero" warnings, fixed problems with Remote Sensor Boosters, updated for compatibility with PHP7.
+
 3.6: REQUIRES EDK 4.2.16.0+! Minor bug fixes, improved compatibility to older PHP versions, added the option to fit implants in pod's high/med slots (Code by Snitch Ashor), added displaying of the kill's position within the solar system (Code by Snitch Ashor)
 
 3.5: Major code improvements. Performance boost. Fix for the new version of the killboard. Assorted fixes scattered across all ships
