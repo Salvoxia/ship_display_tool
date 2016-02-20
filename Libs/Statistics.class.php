@@ -341,9 +341,6 @@ class Statistics
 			if($_name != "Cargo"
 			&& $_name != "Fleet Hangar"
 			&& $_name != "Ship Hangar") {
-				if($_cat == 8) {
-					return 11;
-				}
 				switch($_slot) {
 					case "11":
 						return 3;
@@ -360,6 +357,9 @@ class Statistics
 					case "125":
 						return 0;
 					break;
+				}
+                                if($_cat == 8) {
+					return 11;
 				}
 			}
 		}

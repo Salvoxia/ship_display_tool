@@ -86,37 +86,43 @@ class Fitting
 					$impData[0][$mods->item_->getAttribute("typeID")] = $mods;
 				}
 				if($slot != 100) {
-					switch($slot) {
-						//drones
-						case "6":
+                                        // charges
+					if($mods->item_->getAttribute('itt_cat') == 8)
+					{
+						switch($slot)
+						{
+								case 2:
+										$ammoData[1][$mods->item_->getAttribute("typeID")] = $mods;
+										break;
+								case 1:
+										$ammoData[0][$mods->item_->getAttribute("typeID")] = $mods;
+									break;
+						}
+					}
+                                        
+					// drones
+					else if($slot == "6")
+					{
 							if($ammoData[2][$mods->item_->getAttribute("typeID")]) {
-								$ammoData[2][$mods->item_->getAttribute("typeID")]->quantity_ += $mods->item_->getAttribute('itd_quantity');
+									$ammoData[2][$mods->item_->getAttribute("typeID")]->quantity_ += $mods->item_->getAttribute('itd_quantity');
 							} else {
-								$ammoData[2][$mods->item_->getAttribute("typeID")] = $mods;
+									$ammoData[2][$mods->item_->getAttribute("typeID")] = $mods;
 							}
-						break;
-						//mid slot charges
-						case "11":
-							$ammoData[1][$mods->item_->getAttribute("typeID")] = $mods;//$this->moduleInformation($slot, $mods, $modData);
-						break;
-						//high slot charges
-						case "10":
-							$ammoData[0][$mods->item_->getAttribute("typeID")] = $mods;//$this->moduleInformation($slot, $mods, $modData);
-						break;
-						//all modules
-						default:
+						
+					}
+					else
+					{
 							if(self::advancedModuleSettings(strtolower($mods->item_->getAttribute("typeName"))) == "mwd") {
-								self::$shipStats->setIsMWD(true);
+									self::$shipStats->setIsMWD(true);
 							}
 							if(self::advancedModuleSettings(strtolower($mods->item_->getAttribute("typeName"))) == "ab") {
-								self::$shipStats->setIsAB(true);
+									self::$shipStats->setIsAB(true);
 							}
 
 							for($i = 0; $i < $mods->item_->getAttribute('itd_quantity'); $i++) {
-								self::$modSlots[$slot][self::$shipStats->moduleCount] = $this->moduleInformation($slot, $mods);
-								self::buildSettings($slot, $mods, $modData);
+									self::$modSlots[$slot][self::$shipStats->moduleCount] = $this->moduleInformation($slot, $mods);
+									self::buildSettings($slot, $mods, $modData);
 							}
-						break;
 					};
 
 				}
