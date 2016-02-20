@@ -81,7 +81,7 @@ class Fitting
 			}
 
 			foreach($_fit as $k => $mods) {
-				$slot = Statistics::slots($mods->item_->getAttribute('itt_slot'), $mods->item_->getAttribute('itl_flagText'), $mods->item_->getAttribute('itt_cat'));
+				$slot = Statistics::slots(InventoryFlag::collapse($mods->getLocationID()), $mods->item_->getAttribute('itl_flagText'), $mods->item_->getAttribute('itt_cat'));
 				if($pod) {
 					$impData[0][$mods->item_->getAttribute("typeID")] = $mods;
 				}
