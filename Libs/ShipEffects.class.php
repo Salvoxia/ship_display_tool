@@ -313,8 +313,8 @@ class ShipEffect
 			);
 		}
 
-		if(strstr($_input,"max velocity")
-		|| strstr($_input,"velocity")) {
+		if(strstr($_input,"ship max velocity")
+		|| strstr($_input,"ship velocity")) {
 			return array(
 				array(
 					'effect' => "maxvelocity",
@@ -379,6 +379,7 @@ class ShipEffect
 		}
 
 		if(strstr($_input,"em damage")
+                || strstr($_input,"em torpedo damage")
 		|| strstr($_input,"em missile damage")) {
 			return array(
 				array(
@@ -390,6 +391,7 @@ class ShipEffect
 		}
 
 		if(strstr($_input,"explosive missile damage")
+                || strstr($_input,"explosive torpedo damage")
 		|| strstr($_input,"explosive damage")) {
 			return array(
 				array(
@@ -426,6 +428,7 @@ class ShipEffect
 		}
 
 		if(strstr($_input,"torpedo thermal damage")
+                || strstr($_input,"thermal torpedo damage")
 		|| strstr($_input,"rocket and light missile thermal damage")) {
 			return array(
 				array(
@@ -516,6 +519,7 @@ class ShipEffect
 
 		if(strstr($_input,"missile kinetic damage")
 		|| strstr($_input,"kinetic missile damage")
+                || strstr($_input,"kinetic torpedo damage")
 		|| strstr($_input,"kinetic damage")) {
 			return array(
 				array(
@@ -537,23 +541,23 @@ class ShipEffect
 		}
 
 		if(strstr($_input,"reduction in siege missile launcher powergrid needs")
-		|| strstr($_input,"reduction in torpedo launcher powergrid needs")) {
+		|| strstr($_input,"reduction in torpedo launcher powergrid requirement")) {
 			return array(
 				array(
 					'effect' => "seige_power",
-					'bonus' => $_bonus,
+					'bonus' => 99.65,
 					'type' => self::bonuseffect($_input, $_bonus)
 				)
 			);
 		}
 
-		if(strstr($_input,"reduction in cloak cpu use")
+		if(strstr($_input,"reduction in cloaking devices cpu requirement")
 		|| strstr($_input,"reduced cpu need for cloaking device")
 		|| strstr($_input,"bonus to cpu need of covert ops cloaks")) {
 			return array(
 				array(
 					'effect' => "covert_cloak",
-					'bonus' => $_bonus,
+					'bonus' => $_bonus*5,
 					'type' => self::bonuseffect($_input, $_bonus)
 				)
 			);
@@ -571,24 +575,26 @@ class ShipEffect
 			);
 		}
 
-		if(strstr($_input,"reduction in the powergrid need of large")) {
-			return array(
-				array(
-					'effect' => "heavy_power",
-					'bonus' => $_bonus,
-					'type' => self::bonuseffect($_input, $_bonus)
-				)
-			);
-		}
+                if(strstr($_input,"reduction in large")) {
+			if(strstr($_input,"powergrid requirement")) {
+				return array(
+					array(
+						'effect' => "heavy_power",
+						'bonus' => $_bonus*5,
+						'type' => self::bonuseffect($_input, $_bonus)
+					)
+				);
+			}
 
-		if(strstr($_input,"reduction in the cpu need of large")) {
-			return array(
-				array(
-					'effect' => "heavy_cpu",
-					'bonus' => $_bonus,
-					'type' => self::bonuseffect($_input, $_bonus)
-				)
-			);
+			if(strstr($_input,"cpu requirement")) {
+				return array(
+					array(
+						'effect' => "heavy_cpu",
+						'bonus' => $_bonus*5,
+						'type' => self::bonuseffect($_input, $_bonus)
+					)
+				);
+			}
 		}
 
 		if(strstr($_input,"remote shield booster cpu")) {

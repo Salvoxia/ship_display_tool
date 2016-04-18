@@ -1364,7 +1364,7 @@ class Fitting
 			$arr[self::$shipStats->moduleCount]['name'] = $modName;
 			$arr[self::$shipStats->moduleCount]['cpu'] = $bonus;
 
-			if($groupID == "330" && $modName == "Covert Ops Cloaking Device II") {
+			if($groupID == "330" && $modName == "covert ops cloaking device ii") {
 				$arr[self::$shipStats->moduleCount]['effect'] = "covert_cloak";
 			} else if($groupID == "55" && $mass == "2000") {//p
 				$arr[self::$shipStats->moduleCount]['effect'] = "heavy_cpu";
