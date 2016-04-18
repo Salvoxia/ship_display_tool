@@ -38,7 +38,8 @@ class ShipEffect
 		|| strstr($_input,"sphere launcher rate of fire")
 		|| strstr($_input,"bomb kinetic damage")
 		|| strstr($_input,"explosion velocity")
-		|| strstr($_input,"tractor beam")) {
+		|| strstr($_input,"tractor beam")
+                || strstr($_input,"mode is enabled")) {     // ignore T3 destroyer mode dependent role bonuses
 			return array();
 			//return "";
 		}
