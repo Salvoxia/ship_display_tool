@@ -273,7 +273,7 @@ class Fitting
  */
 	private function buildSettings($_slot, $_mods, $_modData) {
 		if(!in_array($_mods->item_->getAttribute("typeID"), $this->ignoreMods)) {
-			foreach($_modData[$_mods->item_->getAttribute('typeID')] as $att => $modAttributes) {
+			foreach((array)$_modData[$_mods->item_->getAttribute('typeID')] as $att => $modAttributes) {
 				if($modAttributes['unit'] == "%") $type = $modAttributes['unit'];
 				else $type = "+";
 				$neg = self::negRules($modAttributes['stackable'], $modAttributes['unit']);
