@@ -361,6 +361,10 @@ class Statistics
                                 if($_cat == 8) {
 					return 11;
 				}
+                                if($_name == "Drone Bay")
+                                {
+                                        return 6;
+                                }
 			}
 		}
 		return 100;
