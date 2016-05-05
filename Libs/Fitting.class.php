@@ -1872,7 +1872,7 @@ $one = 1;
 				self::$shipStats->setDamageGun(Statistics::modSpeed(self::$shipStats->getDamageGun(), self::$shipStats->moduleCount, self::$shipStats->gunPos, self::$shipStats->gunPosCap, $modName, "rofM", ($bonus/1000), "Small", $capacity, $techLevel));
 			} else if($groupID == "510"  || $groupID == "771") {
 				self::$shipStats->setDamageGun(Statistics::modSpeed(self::$shipStats->getDamageGun(), self::$shipStats->moduleCount, self::$shipStats->gunPos, self::$shipStats->gunPosCap, $modName, "rofM", ($bonus/1000), "Medium", $capacity, $techLevel));
-			} else if($groupID == "506" || $groupID == "508") {
+			} else if($groupID == "506" || $groupID == "508" || $groupID == "1245") {
 				self::$shipStats->setDamageGun(Statistics::modSpeed(self::$shipStats->getDamageGun(), self::$shipStats->moduleCount, self::$shipStats->gunPos, self::$shipStats->gunPosCap, $modName, "rofM", ($bonus/1000), "Large", $capacity, $techLevel));
 			} else if($groupID == "524") {
 				self::$shipStats->setDamageGun(Statistics::modSpeed(self::$shipStats->getDamageGun(), self::$shipStats->moduleCount, self::$shipStats->gunPos, self::$shipStats->gunPosCap, $modName, "rofM", ($bonus/1000), "X-Large", $capacity, $techLevel));

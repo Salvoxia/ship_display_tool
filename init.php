@@ -1352,10 +1352,17 @@ class FittingTools {
 					$reload = 0;
 				} else if($value['rofH']) {
 					$dex = "H";
-					$reload = 10;
+					$reload = 5;
 				} else if($value['rofM']) {
 					$dex = "M";
-					$reload = 10;
+					if(strstr($value['name'], "rapid"))
+					{
+						$reload = 35;
+					}
+					else
+					{
+						$reload = 10;
+					}
 				} else if($value['rof']) {
 					$dex = "";
 					$reload = 0;
