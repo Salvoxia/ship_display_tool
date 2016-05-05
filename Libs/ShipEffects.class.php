@@ -440,6 +440,21 @@ class ShipEffect
 				)
 			);
 		}
+                
+                if(strstr($_input,"kinetic and thermal missile damage")) {
+			return array(
+				array(
+					'effect' => "damageth",
+					'bonus' => $_bonus,
+					'type' => self::bonuseffect($_input, $_bonus)
+				),
+				array(
+					'effect' => "damageki",
+					'bonus' => $_bonus,
+					'type' => self::bonuseffect($_input, $_bonus)
+				)
+			);
+		}
 
 		if(strstr($_input,"remote sensor dampener capacitor need")) {
 			return array(
