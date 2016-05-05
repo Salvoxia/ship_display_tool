@@ -44,6 +44,11 @@ class ShipEffect
 			return array();
 			//return "";
 		}
+                
+                 if(strstr($_input,"while defense") && strstr($_input,"resistance")) 
+                {
+			$_bonus = $_bonus/5;
+                }
 
 		if(strstr($_input,"energy turret capacitor use and small energy turret damage")
 		|| strstr($_input,"energy turret damage")
@@ -297,7 +302,7 @@ class ShipEffect
 		if(strstr($_input,"armor repairer duration")) {
 			return array(
 				array(
-					'effect' => "armorRepCycle",
+					'effect' => "durationskillbonus",
 					'bonus' => $_bonus,
 					'type' => self::bonuseffect($_input, $_bonus)
 				)
