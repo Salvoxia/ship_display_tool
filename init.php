@@ -42,7 +42,7 @@ event::register("killDetail_assembling", "FittingTools::addFitting");
 event::register("killDetail_context_assembling", "FittingTools::RemoveContextFinalBlowTopDamage");
 
 class FittingTools {
-	public static $currentversion 	= "3.5";
+	public static $currentversion 	= "3.7.1";
 	private static $extid;
 
 /**
